@@ -44,6 +44,9 @@ const config = defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    launchOptions: {
+      slowMo: 400
+    }
   },
 
   /* Configure projects for major browsers */
@@ -58,13 +61,6 @@ const config = defineConfig({
     },
     {
       name: 'smoke-tests',
-      grep: /@smoke/,
-      use: { ...devices['Desktop Chrome'] },
-      dependencies: ["global-setup"],
-      teardown: "global-teardown",
-    },
-    {
-      name: 'regression',
       use: { ...devices['Desktop Chrome'] },
       dependencies: ["global-setup"],
       teardown: "global-teardown",
