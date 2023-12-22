@@ -21,7 +21,7 @@ test.describe('Login Form Validation', () => {
         emailInput.blur()
 
         const errorMessage = page.locator('.invalid-feedback p')
-        await expect(errorMessage, 'valid error message should be displayed when username is missing').toHaveText('Email required')
+        await expect(errorMessage, 'valid error message should be displayed when username is missing').toHaveText('Email required2')
     });
 
     test('should display error message when password is missing', async () => {
