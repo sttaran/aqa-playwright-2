@@ -1,11 +1,6 @@
 // @ts-check
 import { defineConfig, devices }  from '@playwright/test';
-
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+import {config as testConfig} from "./config/config.js";
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -17,36 +12,55 @@ const config = defineConfig({
   globalSetup: './globalSetup.js',
   globalTeardown: './globalTeardown.js',
   timeout: 40_000,
+  maxFailures: 10,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  // retries: process.env.CI ? 2 : 0,
+  // retries: 1,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+      ['html', {open: "never"}],
+      // ['playwright-qase-reporter',
+      //   {
+      //     apiToken: process.env.QASE_API_TOKEN,
+      //     projectCode: process.env.QASE_PROJECT_CODE,
+      //     runComplete: true,
+      //     basePath: 'https://api.qase.io/v1',
+      //     logging: true,
+      //     uploadAttachments: true,
+      //   }],
+    // ['json', {  outputFile: 'test-results.json' }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    screenshot: 'only-on-failure',
+    trace: 'retain-on-failure',
+    video: {
+      mode: 'retain-on-failure',
+      size: {
+        width: 1920,
+        height: 1080
+      }
+    },
     actionTimeout: 7_0000,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://qauto.forstudy.space/',
+    baseURL: testConfig.baseURL,
     viewport: {
       width: 1080,
       height: 720
     },
-    headless: false,
-    httpCredentials: {
-      username: 'guest',
-      password: 'welcome2qauto',
-    },
+    headless: true,
+    httpCredentials: testConfig.httpCredentials,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-    launchOptions: {
-      slowMo: 400
-    }
+    // launchOptions: {
+    //   slowMo: 400
+    // }
   },
 
   /* Configure projects for major browsers */
@@ -65,6 +79,12 @@ const config = defineConfig({
       dependencies: ["global-setup"],
       teardown: "global-teardown",
     },
+    // {
+    //   name: 'regression-tests',
+    //   use: { ...devices['Desktop Chrome'] },
+    //   dependencies: ["global-setup"],
+    //   teardown: "global-teardown",
+    // },
 
     // {
     //   name: 'chromium',

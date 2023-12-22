@@ -2,11 +2,10 @@ import Header from "../components/Header.js";
 import BaseComponent from "../components/BaseComponent.js";
 
 
-export default class BasePage  extends  BaseComponent{
+export default class BasePage extends BaseComponent{
     constructor(page, url, waitPageSelector = 'html') {
         super(page, page.locator('html'))
         this._waitPageSelector = waitPageSelector
-        this._page = page
         this._url = url
         this.header = new Header(page)
     }
