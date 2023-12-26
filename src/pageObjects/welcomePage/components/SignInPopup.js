@@ -1,5 +1,6 @@
 import BaseComponent from "../../../components/BaseComponent.js";
 import {expect} from "@playwright/test";
+import GaragePage from "../../garagePage/GaragePage.js";
 
 export default class SignInPopup extends BaseComponent{
     constructor(page) {
@@ -7,6 +8,14 @@ export default class SignInPopup extends BaseComponent{
         this.emailInput = this.container.locator('[name="email"]')
         this.passwordInput = this.container.locator('[name="password"]')
         this.errorMessage = this.container.locator('.invalid-feedback p')
+        this.submitButton = this.container.locator('.btn-primary')
+    }
+
+
+    async loginWithCredentials(email, password){
+        await this.fill(email, password)
+        await this.submitButton.click()
+        return new GaragePage(this._page)
     }
 
     async fill(email, password){
