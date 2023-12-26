@@ -20,8 +20,13 @@ test.describe('Login Form Validation', () => {
         emailInput.focus()
         emailInput.blur()
 
+        await expect(emailInput).toHaveCSS('border-color', 'rgb(220, 53, 69)')
+
+        const bgColor = await emailInput.evaluate((el)=> window.getComputedStyle(el).borderColor)
+        console.log('bgColor', bgColor)
+
         const errorMessage = page.locator('.invalid-feedback p')
-        await expect(errorMessage, 'valid error message should be displayed when username is missing').toHaveText('Email required2')
+        await expect(errorMessage, 'valid error message should be displayed when username is missing').toHaveText('Email required')
     });
 
     test('should display error message when password is missing', async () => {

@@ -10,6 +10,10 @@ export default class BasePage extends BaseComponent{
         this.header = new Header(page)
     }
 
+    get page() {
+        return this._page
+    }
+
     async visit(){
         await this._page.goto(this._url)
         await this.waitLoaded()

@@ -54,7 +54,7 @@ const config = defineConfig({
       width: 1080,
       height: 720
     },
-    headless: true,
+    headless: false,
     httpCredentials: testConfig.httpCredentials,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -74,7 +74,7 @@ const config = defineConfig({
       testMatch: 'tests/teardown/*.teardown.js',
     },
     {
-      name: 'smoke-tests',
+      name: 'e2e chrome',
       use: { ...devices['Desktop Chrome'] },
       dependencies: ["global-setup"],
       teardown: "global-teardown",
