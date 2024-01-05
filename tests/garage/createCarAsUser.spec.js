@@ -150,7 +150,7 @@ test.describe.only('User', ()=>{
         })
     })
 
-    test('API should return user\s cars', async ({userGaragePageWithStorage})=>{
+    test('API should return user\'s cars', async ({userGaragePageWithStorage})=>{
         const {page} = userGaragePageWithStorage
 
         const userCars = await page.request.get('/api/cars')
@@ -158,13 +158,13 @@ test.describe.only('User', ()=>{
         expect(body.status).toBe("ok")
     })
 
-    test.only('API should return user\s cars (fixture)', async ({apiClient})=>{
+    test.only('API should return user\'s cars (fixture)', async ({apiClient})=>{
         const brandsResponse = await apiClient.get('/api/cars')
         const body = await brandsResponse.json()
         expect(body.status).toBe("ok")
     })
 
-    test('API should NOT return user\s cars', async ()=>{
+    test('API should NOT return user\'s cars', async ()=>{
         const client = await request.newContext()
         const brandsResponse = await client.get('/api/cars')
         const body = await brandsResponse.json()
