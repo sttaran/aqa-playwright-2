@@ -1,5 +1,5 @@
 import {expect, test} from "@playwright/test";
-import WelcomePage from "../../src/pageObjects/welcomePage/WelcomePage.js";
+import WelcomePage from "../../../src/pageObjects/welcomePage/WelcomePage.js";
 
 test.describe('Login Form Validation POM', () => {
     let page;

@@ -1,6 +1,6 @@
 import {expect, request} from "@playwright/test";
-import { test } from '../../src/fixtures/myFixture.js'
-import {STORAGE_STATE_USER_PATH} from "../../src/data/constants/storageState.js";
+import { test } from '../../../src/fixtures/myFixture.js'
+import {STORAGE_STATE_USER_PATH} from "../../../src/data/constants/storageState.js";
 
 test.describe('User', ()=>{
     test('should be able to create a car', async ({userGaragePageWithStorage})=>{
