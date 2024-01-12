@@ -1,5 +1,5 @@
 import {expect, test} from "@playwright/test";
-import WelcomePage from "../../src/pageObjects/welcomePage/WelcomePage.js";
+import WelcomePage from "../../../src/pageObjects/welcomePage/WelcomePage.js";
 
 test.describe('Guest', ()=>{
     test('should be able to create a car', async ({page})=>{

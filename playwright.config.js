@@ -78,6 +78,11 @@ const config = defineConfig({
       use: { ...devices['Desktop Chrome'] },
       dependencies: ["global-setup"],
       teardown: "global-teardown",
+      testMatch: '/tests/e2e/**/ap*.spec.js'
+    },
+    {
+      name: 'API tests',
+      testMatch: '/tests/api/**/*.spec.js'
     },
     // {
     //   name: 'regression-tests',
