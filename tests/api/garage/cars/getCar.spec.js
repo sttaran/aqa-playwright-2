@@ -7,7 +7,7 @@ import {CAR_BRANDS} from "../../../../src/data/dict/carBrands.js";
 import {CAR_MODELS} from "../../../../src/data/dict/carModels.js";
 
 
-test.describe.only("Cars", ()=>{
+test.describe("Cars", ()=>{
     test.describe("Get by Id", ()=>{
         test.describe("Positive case", ()=>{
             let carId;
@@ -26,12 +26,10 @@ test.describe.only("Cars", ()=>{
                 validateStatus: () => true
             }))
 
-
             async function createCar(requestData){
                 const createCarResponse = await client.post('/cars', requestData)
                 return createCarResponse.data.data.id
             }
-
 
             test.beforeAll(async ()=>{
                 await client.post('/auth/signin', {
