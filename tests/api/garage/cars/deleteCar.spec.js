@@ -5,7 +5,7 @@ import {CAR_BRANDS} from "../../../../src/data/dict/carBrands.js";
 import {CAR_MODELS} from "../../../../src/data/dict/carModels.js";
 
 
-test.describe.only("Cars", ()=>{
+test.describe("Cars", ()=>{
     test.describe("Delete", ()=>{
         test.describe("Positive case", ()=>{
             let carId;
