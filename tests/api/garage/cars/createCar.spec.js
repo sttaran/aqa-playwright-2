@@ -4,6 +4,7 @@ import {expect, test} from "@playwright/test";
 import {wrapper} from "axios-cookiejar-support";
 import {CookieJar} from "tough-cookie";
 import {negativeFixtures} from "./fixtures/createCar.fixtures.js";
+import APIClient from "../../../../src/client/APIClient.js";
 
 test.describe.skip("Cars", ()=>{
     test.describe("Create", ()=>{
@@ -68,30 +69,21 @@ test.describe.skip("Cars", ()=>{
 test.describe("Cars", ()=>{
     test.describe("Create", ()=>{
         test.describe("Positive case", ()=>{
-            const jar = new CookieJar()
-
-            let client = wrapper(axios.create({
-                baseURL: 'https://qauto.forstudy.space/api',
-                jar
-            }))
+            let client;
 
             let brands;
 
             test.beforeAll(async ()=>{
-               await client.post('/auth/signin', {
-                    "email": USERS.JOE_DOU.email,
-                    "password": USERS.JOE_DOU.password,
-                    "remember": false
-                })
+                client = await APIClient.authenticate(USERS.JOE_DOU.email, USERS.JOE_DOU.password)
 
-                const response = await client.get('/cars/brands')
+                const response = await client.carController.getBrands()
                 brands = response.data.data
             })
 
             test.afterAll(async()=>{
-                const userCars = await client.get('/cars')
+                const userCars = await client.carController.getUserCars()
                 await Promise.all(
-                    userCars.data.data.map((car)=> client.delete(`/cars/${car.id}`))
+                    userCars.data.data.map((car)=> client.carController.deleteCarById(car.id))
                 )
             })
 
@@ -99,7 +91,7 @@ test.describe("Cars", ()=>{
                 for (const brand of brands) {
                     await test.step(`Create car brand ${brand.title}`, async()=>{
 
-                        const modelsResponse = await client.get(`/cars/models?carBrandId=${brand.id}`)
+                        const modelsResponse = await client.carController.getModelsByBrandId(brand.id)
                         const models = modelsResponse.data.data
 
                         for (const model of models) {
@@ -109,7 +101,7 @@ test.describe("Cars", ()=>{
                                     "carModelId": model.id,
                                     "mileage": Math.floor(Math.random() * 100)
                                 }
-                                const createCarResponse = await client.post('/cars', createCarReqBody)
+                                const createCarResponse = await client.carController.createCar(createCarReqBody)
                                 expect(createCarResponse.status, "Status code should be valid").toBe(201)
                             })
                         }
