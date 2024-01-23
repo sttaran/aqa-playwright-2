@@ -92,7 +92,7 @@ test.describe('User', ()=>{
     })
 })
 
-test.describe.only('User', ()=>{
+test.describe('User', ()=>{
     test.afterAll(async ()=>{
         const client = await request.newContext({
             storageState: STORAGE_STATE_USER_PATH
@@ -158,7 +158,7 @@ test.describe.only('User', ()=>{
         expect(body.status).toBe("ok")
     })
 
-    test.only('API should return user\s cars (fixture)', async ({apiClient})=>{
+    test('API should return user\s cars (fixture)', async ({apiClient})=>{
         const brandsResponse = await apiClient.get('/api/cars')
         const body = await brandsResponse.json()
         expect(body.status).toBe("ok")

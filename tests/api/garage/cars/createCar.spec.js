@@ -194,7 +194,7 @@ test.describe.skip("Cars", ()=>{
     })
 })
 
-test.describe.only("Cars", ()=>{
+test.describe("Cars", ()=>{
     test.describe("Create", ()=>{
         test.describe("Negative case", ()=>{
             const jar = new CookieJar()

@@ -8,7 +8,6 @@ import {config as testConfig} from "./config/config.js";
 const config = defineConfig({
   // testDir: './tests',
   testMatch: '/tests/**/*.spec.js',
-  testIgnore: '/tests/**/test.spec.js',
   globalSetup: './globalSetup.js',
   globalTeardown: './globalTeardown.js',
   timeout: 40_000,
@@ -54,7 +53,7 @@ const config = defineConfig({
       width: 1080,
       height: 720
     },
-    headless: false,
+    headless: true,
     httpCredentials: testConfig.httpCredentials,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -78,7 +77,7 @@ const config = defineConfig({
       use: { ...devices['Desktop Chrome'] },
       dependencies: ["global-setup"],
       teardown: "global-teardown",
-      testMatch: '/tests/e2e/**/ap*.spec.js'
+      testMatch: '/tests/e2e/**/*.spec.js'
     },
     {
       name: 'API tests',
