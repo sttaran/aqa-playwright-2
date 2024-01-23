@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
       - name: "Copy env file"
         run: |
-          cp '.env.example' '.env'
+          cp './env/.env.example' './env/.env'
       - name: "Run Playwright tests"
         run: |
           HTTP_CREDENTIALS_USERNAME=guest HTTP_CREDENTIALS_PASSWORD=welcome2qauto docker-compose up --exit-code-from tests
