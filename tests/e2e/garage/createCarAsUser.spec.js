@@ -2,8 +2,8 @@ import {expect, request} from "@playwright/test";
 import { test } from '../../../src/fixtures/myFixture.js'
 import {STORAGE_STATE_USER_PATH} from "../../../src/data/constants/storageState.js";
 
-test.describe('User', ()=>{
-    test('should be able to create a car', async ({userGaragePageWithStorage})=>{
+test.describe('User', ()=> {
+    test('should be able to create a car', async ({userGaragePageWithStorage}) => {
         const popup = await userGaragePageWithStorage.openAddCarPopup()
         await popup.fillAndSubmit("BMW", "X6", 12)
 
@@ -12,44 +12,43 @@ test.describe('User', ()=>{
         await expect(page.locator('p', {hasText: `BMW X6`})).toBeVisible()
     })
 
-    test('should be able to create a car  (event listener)', async ({userGaragePageWithStorage})=>{
+    test('should be able to create a car  (event listener)', async ({userGaragePageWithStorage}) => {
         const {page} = userGaragePageWithStorage
-        page.on('request', (request)=>{
+        page.on('request', (request) => {
             console.log(request.url())
         })
 
-        page.on('response', async (response)=>{
-           if ((await response.headerValue('content-type')) === "application/json; charset=utf-8"){
-               console.log((await response.json()).toString())
-           }
+        page.on('response', async (response) => {
+            if ((await response.headerValue('content-type')) === "application/json; charset=utf-8") {
+                console.log((await response.json()).toString())
+            }
         })
 
         const popup = await userGaragePageWithStorage.openAddCarPopup()
         await popup.fillAndSubmit("BMW", "X6", 12)
 
 
-
         await expect(page.locator('p', {hasText: `BMW X6`})).toBeVisible()
     })
 
-    test('should be able to create a car (intercept request)', async ({userGaragePageWithStorage})=>{
+    test('should be able to create a car (intercept request)', async ({userGaragePageWithStorage}) => {
         const {page} = userGaragePageWithStorage
 
-        await page.route('/api/cars/*',async ( route )=>{
-          if(route.request().url().includes('brands')){
-              const headers = route.request().headers()
-              headers["Accept-Encoding"] = "Identity"
+        await page.route('/api/cars/*', async (route) => {
+            if (route.request().url().includes('brands')) {
+                const headers = route.request().headers()
+                headers["Accept-Encoding"] = "Identity"
 
-             const response = await route.fetch()
-              console.log(await response.json())
+                const response = await route.fetch()
+                console.log(await response.json())
 
-              await route.continue({headers})
-              return
-          }
-         await route.continue()
+                await route.continue({headers})
+                return
+            }
+            await route.continue()
         })
 
-        page.on('response', (response)=> console.log(response.request().url() ,response.request().headers()))
+        page.on('response', (response) => console.log(response.request().url(), response.request().headers()))
 
         const popup = await userGaragePageWithStorage.openAddCarPopup()
         await popup.fillAndSubmit("BMW", "X6", 12)
@@ -57,7 +56,7 @@ test.describe('User', ()=>{
         await expect(page.locator('p', {hasText: `BMW X6`}).first()).toBeVisible()
     })
 
-    test('should be able to create a car (modify response)', async ({userGaragePageWithStorage})=>{
+    test('should be able to create a car (modify response)', async ({userGaragePageWithStorage}) => {
         const {page} = userGaragePageWithStorage
         const body = {
             "status": "ok",
@@ -74,20 +73,18 @@ test.describe('User', ()=>{
                 },
             ]
         }
-        await page.route('/api/cars/brands',async ( route )=>{
-           await route.fulfill({
-               body: JSON.stringify(body)
+        await page.route('/api/cars/brands', async (route) => {
+            await route.fulfill({
+                body: JSON.stringify(body)
             })
         })
-        page.on('console', (data)=> {
-            console.log( "Console event has happened: ",data.text())
+        page.on('console', (data) => {
+            console.log("Console event has happened: ", data.text())
         })
 
 
         const popup = await userGaragePageWithStorage.openAddCarPopup()
-        await popup.fillAndSubmit("BMW", "X6", 12)
-
-        await expect(page.locator('p', {hasText: `BMW X6`}).first()).toBeVisible()
+        await expect(popup.modelDropdown).toBeDisabled()
     })
 })
 
