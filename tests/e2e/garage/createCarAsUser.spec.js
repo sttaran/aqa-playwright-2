@@ -12,7 +12,7 @@ test.describe('User', ()=>{
         await expect(page.locator('p', {hasText: `BMW X6`})).toBeVisible()
     })
 
-    test.only('should be able to create a car  (event listener)', async ({userGaragePageWithStorage})=>{
+    test('should be able to create a car  (event listener)', async ({userGaragePageWithStorage})=>{
         const {page} = userGaragePageWithStorage
         page.on('request', (request)=>{
             console.log(request.url())
