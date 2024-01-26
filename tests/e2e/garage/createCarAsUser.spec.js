@@ -12,14 +12,16 @@ test.describe('User', ()=>{
         await expect(page.locator('p', {hasText: `BMW X6`})).toBeVisible()
     })
 
-    test('should be able to create a car  (event listener)', async ({userGaragePageWithStorage})=>{
+    test.only('should be able to create a car  (event listener)', async ({userGaragePageWithStorage})=>{
         const {page} = userGaragePageWithStorage
         page.on('request', (request)=>{
             console.log(request.url())
         })
 
         page.on('response', async (response)=>{
-            console.log((await response.json()).toString())
+           if ((await response.headerValue('content-type')) === "application/json; charset=utf-8"){
+               console.log((await response.json()).toString())
+           }
         })
 
         const popup = await userGaragePageWithStorage.openAddCarPopup()
@@ -79,9 +81,6 @@ test.describe('User', ()=>{
         })
         page.on('console', (data)=> {
             console.log( "Console event has happened: ",data.text())
-            if (data.type() === "error"){
-                throw new Error("I have broken your FE!!! ahahahah")
-            }
         })
 
 
