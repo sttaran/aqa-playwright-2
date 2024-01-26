@@ -8,6 +8,7 @@ services:
     environment:
       - HTTP_CREDENTIALS_USERNAME=${HTTP_CREDENTIALS_USERNAME}
       - HTTP_CREDENTIALS_PASSWORD=${HTTP_CREDENTIALS_PASSWORD}
+      - CI="true"
     network_mode: "host"
     volumes:
       - ./playwright-report:/playwright-tests/playwright-report
