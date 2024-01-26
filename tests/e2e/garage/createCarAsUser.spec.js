@@ -28,7 +28,7 @@ test.describe('User', ()=> {
         await popup.fillAndSubmit("BMW", "X6", 12)
 
 
-        await expect(page.locator('p', {hasText: `BMW X6`})).toBeVisible()
+        await expect(page.locator('p', {hasText: `BMW X6`}).first()).toBeVisible()
     })
 
     test('should be able to create a car (intercept request)', async ({userGaragePageWithStorage}) => {

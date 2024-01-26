@@ -1,7 +1,6 @@
 import {wrapper} from "axios-cookiejar-support";
 import axios from "axios";
 
-
 export default class BaseController {
     constructor(jar) {
         this.client = wrapper(axios.create({
@@ -11,3 +10,9 @@ export default class BaseController {
         }))
     }
 }
+
+// export default class BaseController {
+//     constructor(request) {
+//         this.client = request
+//     }
+// }
