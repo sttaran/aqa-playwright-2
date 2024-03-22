@@ -18,7 +18,6 @@ jobs:
         run: |
           cp './env/.env.example' './env/.env'
 
-
       - name: "Set up node js"
         uses: actions/setup-node@v3
         with:
