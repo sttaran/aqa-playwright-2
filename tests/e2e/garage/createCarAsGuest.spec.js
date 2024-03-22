@@ -34,6 +34,6 @@ test.describe('Guest', ()=>{
         await page.evaluate((data)=> sessionStorage.setItem('guestData', JSON.stringify(data)), parsedGuestData)
         // await page.evaluate((data)=> localStorage.setItem('guestDataLocal', JSON.stringify(data)), parsedGuestData)
 
-        await page.pause()
+        // await page.pause()
     })
 })
