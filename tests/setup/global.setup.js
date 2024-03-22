@@ -7,16 +7,6 @@ import {CookieJar} from "tough-cookie";
 
 
 setup('login as user and save storage state', async ({page}) => {
-    const jar = new CookieJar()
-    const client = new APIClient(jar)
-
-    const response = await client.authController.login({
-        "email": USERS.JOE_DOU.email,
-        "password": USERS.JOE_DOU.password,
-        "remember": false
-    })
-
-
 
     const welcomePage = new WelcomePage(page)
     await welcomePage.visit()

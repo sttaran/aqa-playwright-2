@@ -53,7 +53,7 @@ const config = defineConfig({
       width: 1080,
       height: 720
     },
-    headless: true,
+    headless: false,
     httpCredentials: testConfig.httpCredentials,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -72,16 +72,24 @@ const config = defineConfig({
       name: "global-teardown",
       testMatch: 'tests/teardown/*.teardown.js',
     },
-    {
-      name: 'e2e chrome',
-      use: { ...devices['Desktop Chrome'] },
-      dependencies: ["global-setup"],
-      teardown: "global-teardown",
-      testMatch: '/tests/e2e/**/*.spec.js'
-    },
+    // {
+    //   name: 'CRM',
+    //   use: { ...devices['Desktop Chrome'] },
+    //   // dependencies: ["global-setup"],
+    //   // teardown: "global-teardown",
+    //   testMatch: '/tests/crm/**/*.spec.js'
+    // },
+    // {
+    //   name: 'e2e chrome',
+    //   use: { ...devices['Desktop Chrome'] },
+    //   // dependencies: ["global-setup"],
+    //   // teardown: "global-teardown",
+    //   testMatch: '/tests/e2e/**/*.spec.js'
+    // },
     {
       name: 'API tests',
-      testMatch: '/tests/api/**/*.spec.js'
+      testMatch: '/tests/api/**/*.spec.js',
+      dependencies: ["global-setup"],
     },
     // {
     //   name: 'regression-tests',
